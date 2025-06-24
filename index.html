@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ayanokoji Runner</title>
+
+  <!-- ✅ Google AdSense verification script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3322354760651272"
+     crossorigin="anonymous"></script>
+
   <style>
     body {
       margin: 0;
@@ -19,7 +24,22 @@
   </style>
 </head>
 <body>
+
+<!-- ✅ Ad placement just above the game canvas -->
+<div style="text-align:center; margin:10px;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3322354760651272"
+       data-ad-slot="1234567890"  <!-- (Change after real ad unit creation) -->
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
 <canvas id="gameCanvas" width="480" height="640"></canvas>
+
 <script>
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
@@ -114,9 +134,7 @@
     }
   });
 
-  // ✅ Mobile Touch Support
-  canvas.addEventListener('touchstart', function(e) {
-    e.preventDefault(); // Stop scrolling
+  document.addEventListener('touchstart', function() {
     bird.velocity = bird.lift;
   });
 
