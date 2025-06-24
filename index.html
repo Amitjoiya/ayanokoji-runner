@@ -25,12 +25,12 @@
 </head>
 <body>
 
-<!-- ✅ Ad placement just above the game canvas -->
+<!-- ✅ Ad block (this will show display ads when approved) -->
 <div style="text-align:center; margin:10px;">
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-3322354760651272"
-       data-ad-slot="1234567890"  <!-- (Change after real ad unit creation) -->
+       data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>
@@ -38,6 +38,7 @@
   </script>
 </div>
 
+<!-- ✅ Game Canvas -->
 <canvas id="gameCanvas" width="480" height="640"></canvas>
 
 <script>
@@ -125,6 +126,7 @@
     requestAnimationFrame(gameLoop);
   }
 
+  // ✅ Keyboard controls
   document.addEventListener('keydown', function(e) {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
       bird.velocity = bird.lift;
@@ -134,6 +136,7 @@
     }
   });
 
+  // ✅ Touch controls for mobile
   document.addEventListener('touchstart', function() {
     bird.velocity = bird.lift;
   });
