@@ -114,7 +114,14 @@
     }
   });
 
+  // ✅ Mobile Touch Support
+  canvas.addEventListener('touchstart', function(e) {
+    e.preventDefault(); // Stop scrolling
+    bird.velocity = bird.lift;
+  });
+
   gameLoop();
 </script>
 </body>
 </html>
+
