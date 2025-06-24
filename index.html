@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayanokoji Escape - Endless Runner</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(#0f2027, #203a43, #2c5364);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    canvas {
+      display: block;
+      margin: auto;
+      background: #111;
+      border: 2px solid #0ff;
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #0ff;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div id="score">Score: 0</div>
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let score = 0;
+    let gameSpeed = 4;
+    let gravity = 1.5;
+
+    const player = {
+      x: 50,
+      y: 300,
+      width: 50,
+      height: 50,
+      velocityY: 0,
+      isJumping: false
+    };
+
+    const obstacles = [];
+
+    function drawPlayer() {
+      ctx.fillStyle = "#0ff";
+      ctx.fillRect(player.x, player.y, player.width, player.height);
+    }
+
+    function drawObstacle(obs) {
+      ctx.fillStyle = "#f00";
+      ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
+    }
+
+    function updateObstacles() {
+      if (Math.random() < 0.02) {
+        obstacles.push({
+          x: canvas.width,
+          y: 350,
+          width: 20 + Math.random() * 30,
+          height: 50
+        });
+      }
+
+      obstacles.forEach((obs, index) => {
+        obs.x -= gameSpeed;
+        drawObstacle(obs);
+
+        // Collision detection
+        if (
+          player.x < obs.x + obs.width &&
+          player.x + player.width > obs.x &&
+          player.y < obs.y + obs.height &&
+          player.y + player.height > obs.y
+        ) {
+          alert("Game Over! Final Score: " + score);
+          document.location.reload();
+        }
+
+        // Remove off-screen obstacles
+        if (obs.x + obs.width < 0) {
+          obstacles.splice(index, 1);
+          score++;
+          gameSpeed += 0.05;
+        }
+      });
+    }
+
+    function updatePlayer() {
+      if (player.y + player.height < canvas.height) {
+        player.velocityY += gravity;
+      } else {
+        player.velocityY = 0;
+        player.y = canvas.height - player.height;
+        player.isJumping = false;
+      }
+      player.y += player.velocityY;
+    }
+
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawPlayer();
+      updateObstacles();
+      updatePlayer();
+      document.getElementById("score").innerText = "Score: " + score;
+      requestAnimationFrame(gameLoop);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space" && !player.isJumping) {
+        player.velocityY = -20;
+        player.isJumping = true;
+      }
+    });
+
+    gameLoop();
+  </script>
+</body>
+</html>
